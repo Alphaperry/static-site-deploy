@@ -48,7 +48,7 @@ jobs:
 
 
     - name: Copy files to EC2 via SCP
-      evn:
+      env:
         EC2_PUBLIC_IP: ${{ env.EC2_PUBLIC_IP }}
         EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
       run: |
