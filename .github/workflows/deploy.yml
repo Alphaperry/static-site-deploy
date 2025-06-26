@@ -9,6 +9,9 @@ jobs:
   deploy:
     name: Deploy via Terraform and SSH
     runs-on: ubuntu-latest
+    defauls: 
+      run: 
+        working-directory: ./terraform
 
     steps:
     - name: Checkout Code
@@ -29,7 +32,11 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
+    - name: Terraform Plan
+      run: terraform plan -out=tfplan
+
     - name: Terraform Apply
+      if: github.ref == 'refs/heads/main'
       run: terraform apply -auto-approve
 
     - name: Copy files to EC2 via SCP
