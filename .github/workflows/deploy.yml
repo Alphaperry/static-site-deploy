@@ -1,0 +1,28 @@
+name: Deploy Static Site to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy via SSH
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Copy files to EC2 via SCP
+      run: |
+        echo "$EC2_SSH_KEY" > private_key.pem
+        chmod 600 private_key.pem
+        scp -o StrictHostKeyChecking=no -i private_key.pem site/index.html ec2-user@$EC2_PUBLIC_IP:/tmp/index.html
+
+    - name: Replace website content on EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_PUBLIC_IP << 'EOF'
+          sudo mv /tmp/index.html /usr/share/nginx/html/index.html
+          sudo systemctl restart nginx
+        EOF
