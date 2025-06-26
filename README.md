@@ -1,3 +1,4 @@
+<<<<<<< HEAD
  Static Website Deployment via Terraform & GitHub Actions
 This project demonstrates how to provision an AWS EC2 instance using Terraform, configure it with Nginx, and deploy a static website using GitHub Actions for CI/CD.
 
@@ -96,3 +97,7 @@ Built with  by a Cloud Engineer who automates everything.
 
 
 
+=======
+# static-site-deploy
+Static website deployed via Terraform and GitHub Actions
+>>>>>>> 48685a11c3fea1fea47ef2bf39acd82e0be21ff5
