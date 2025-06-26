@@ -9,7 +9,7 @@ jobs:
   deploy:
     name: Deploy via Terraform and SSH
     runs-on: ubuntu-latest
-    defauls: 
+    defaults: 
       run: 
         working-directory: ./terraform
 
