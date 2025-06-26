@@ -43,7 +43,7 @@ jobs:
       run: |
         echo "$EC2_SSH_KEY" > private_key.pem
         chmod 600 private_key.pem
-        scp -o StrictHostKeyChecking=no -i private_key.pem site/index.html ec2-user@$EC2_PUBLIC_IP:/tmp/index.html
+        scp -o StrictHostKeyChecking=no -i private_key.pem  ../site/index.html ec2-user@$EC2_PUBLIC_IP:/tmp/index.html
 
     - name: Replace website content on EC2
       run: |
