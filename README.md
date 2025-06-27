@@ -87,4 +87,3 @@ Built with  by a Cloud Engineer who automates everything.
 # static-site-deploy
 Static website deployed via Terraform and GitHub
 Actions
-
