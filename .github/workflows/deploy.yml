@@ -89,10 +89,10 @@ jobs:
         sudo mv /tmp/index.html /usr/share/nginx/html/index.html
 
         echo "Testing Nginx config..."
-        sudo /usr/sbin/nginx -t
+        sudo env "PATH=$PATH:/usr/sbin:/usr/bin" /usr/sbin/nginx -t
 
         echo "Reloading Nginx gracefully..."
-        sudo /usr/sbin/nginx -s reload
+        sudo env "PATH=$PATH:/usr/sbin:/usr/bin" /usr/sbin/nginx -s reload
 
         echo " Nginx reload invoked successfully"
         EOF
