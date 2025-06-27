@@ -73,24 +73,49 @@ jobs:
         echo "$EC2_SSH_KEY" > private_key.pem
         chmod 600 private_key.pem
         scp -o StrictHostKeyChecking=no -i private_key.pem  ../site/index.html ec2-user@$EC2_PUBLIC_IP:/tmp/index.html
-        
+
     - name: Deploy and reload Nginx via binary
       env:
         EC2_PUBLIC_IP: ${{ env.EC2_PUBLIC_IP }}
       run: |
         ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_PUBLIC_IP << 'EOF'
-        set -e
+        set -exo pipefail
 
-        sudo mkdir -p /usr/share/nginx/html
-        sudo mv /tmp/index.html /usr/share/nginx/html/index.html
-        
-        export PATH=\$PATH:/usr/sbin
+        # Full path to sudo and nginx
+        SUDO=/usr/bin/sudo
+        NGINX_BIN=/usr/sbin/nginx
+
+        # Deploy new index.html
+        $SUDO mkdir -p /usr/share/nginx/html
+        $SUDO mv /tmp/index.html /usr/share/nginx/html/index.html
+
+        # Validate and reload Nginx
         echo "Testing Nginx config..."
-        sudo env "PATH=\$PATH" nginx -t
+        $SUDO $NGINX_BIN -t
 
         echo "Reloading Nginx gracefully..."
-        sudo env "PATH=\$PATH" nginx -s reload
+        $SUDO $NGINX_BIN -s reload
 
-        echo " Nginx reload invoked successfully"
+        echo "✅ Nginx validated and reloaded successfully!"
         EOF
+
+    # - name: Deploy and reload Nginx via binary
+    #   env:
+    #     EC2_PUBLIC_IP: ${{ env.EC2_PUBLIC_IP }}
+    #   run: |
+    #     ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_PUBLIC_IP << 'EOF'
+    #     set -e
+
+    #     sudo mkdir -p /usr/share/nginx/html
+    #     sudo mv /tmp/index.html /usr/share/nginx/html/index.html
+        
+    #     export PATH=\$PATH:/usr/sbin
+    #     echo "Testing Nginx config..."
+    #     sudo env "PATH=\$PATH" nginx -t
+
+    #     echo "Reloading Nginx gracefully..."
+    #     sudo env "PATH=\$PATH" nginx -s reload
+
+    #     echo " Nginx reload invoked successfully"
+    #     EOF
 
