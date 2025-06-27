@@ -32,6 +32,10 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
+    - name: Terraform Destroy (clean up old resources)
+      if: github.ref == 'refs/heads/main'
+      run: terraform destroy -auto-approve
+
     - name: Terraform Plan
       run: terraform plan -out=tfplan
 
@@ -57,7 +61,7 @@ jobs:
         chmod 600 private_key.pem
         echo "Waiting for SSH on $EC2_PUBLIC_IP..."
         for i in {1..15}; do
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_PUBLIC_IP "echo SSH is ready" && break
+          ssh -vvv -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_PUBLIC_IP "echo SSH is ready" && break
           echo "SSH not available yet, retrying in 10 seconds..."
           sleep 20
         done
