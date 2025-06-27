@@ -19,7 +19,7 @@ resource "aws_instance" "web_server" {
   user_data = file("user_data.sh")
 
   tags = {
-    Name = "StaticSiteWebServer"
+    Name = "StaticSiteWebServer1"
   }
 }
 

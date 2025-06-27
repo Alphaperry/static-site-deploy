@@ -1,5 +1,5 @@
 resource "aws_security_group" "ec2_sg" {
-  name   = "web_sg"
+  name   = "web_sg1"
   vpc_id = data.aws_vpc.default.id
 
   ingress {
