@@ -85,13 +85,14 @@ jobs:
         ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_PUBLIC_IP << 'EOF'
           sudo mkdir -p /usr/share/nginx/html
           sudo mv /tmp/index.html /usr/share/nginx/html/index.html
-          
+
         # Graceful reload via nginx signal
         if sudo /usr/sbin/nginx -t && sudo /usr/sbin/nginx -s reload; then
           echo "Nginx config tested and reloaded successfully"
         else
           echo " Nginx reload or config check failed"
           sudo systemctl status nginx || true
+          sudo journalctl -u nginx.service --no-pager | tail -20 || true
           exit 1
         fi
           # sudo systemctl restart nginx.service
