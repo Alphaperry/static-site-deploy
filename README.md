@@ -35,9 +35,9 @@ An EC2 key pair (public/private)
 
 # Setup Instructions
 1. Clone the Repo  
-   ```bash
-   git clone https://github.com/Alphaperry/static-site-deploy.git
-   cd static-site-deploy
+bash
+git clone https://github.com/Alphaperry/static-site-deploy.git
+cd static-site-deploy
 2. Deploy the Infrastructure
 bash
 
