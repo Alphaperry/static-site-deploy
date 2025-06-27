@@ -33,10 +33,6 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
-    - name: Terraform Destroy (clean up old resources)
-      if: github.ref == 'refs/heads/main'
-      run: terraform destroy -auto-approve
-
     - name: Terraform Plan
       run: terraform plan -out=tfplan
 
