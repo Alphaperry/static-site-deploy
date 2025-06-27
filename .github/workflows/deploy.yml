@@ -74,29 +74,28 @@ jobs:
         chmod 600 private_key.pem
         scp -o StrictHostKeyChecking=no -i private_key.pem  ../site/index.html ec2-user@$EC2_PUBLIC_IP:/tmp/index.html
 
-    - name: Deploy and reload Nginx via binary
+
+    - name: Deploy and reload Nginx in root shell
       env:
         EC2_PUBLIC_IP: ${{ env.EC2_PUBLIC_IP }}
       run: |
-        ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_PUBLIC_IP << 'EOF'
+        ssh -o StrictHostKeyChecking=no -i private_key.pem \
+        ec2-user@$EC2_PUBLIC_IP << 'EOF'
         set -exo pipefail
 
-        # Full path to sudo and nginx
-        SUDO=/usr/bin/sudo
-        NGINX_BIN=/usr/sbin/nginx
+        # Start a root shell to ensure access to /usr/sbin/nginx
+        sudo su - << 'INNER'
+        mkdir -p /usr/share/nginx/html
+        mv /tmp/index.html /usr/share/nginx/html/index.html
 
-        # Deploy new index.html
-        $SUDO mkdir -p /usr/share/nginx/html
-        $SUDO mv /tmp/index.html /usr/share/nginx/html/index.html
-
-        # Validate and reload Nginx
         echo "Testing Nginx config..."
-        $SUDO $NGINX_BIN -t
+        nginx -t
 
-        echo "Reloading Nginx gracefully..."
-        $SUDO $NGINX_BIN -s reload
+        echo "Reloading Nginx..."
+        nginx -s reload
+        INNER
 
-        echo "✅ Nginx validated and reloaded successfully!"
+        echo "✅ Nginx config tested and reloaded!"
         EOF
 
     # - name: Deploy and reload Nginx via binary
