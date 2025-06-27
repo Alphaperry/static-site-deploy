@@ -85,5 +85,21 @@ jobs:
         ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_PUBLIC_IP << 'EOF'
           sudo mkdir -p /usr/share/nginx/html
           sudo mv /tmp/index.html /usr/share/nginx/html/index.html
-          sudo systemctl restart nginx.service
+                  # Check for systemd service
+          if sudo systemctl list-units --type=service | grep -q 'nginx.*.service'; then
+            echo "Restarting systemd-managed Nginx..."
+            sudo systemctl restart nginx.service
+          else
+            echo "systemd nginx.service not found. Trying SysV init..."
+            sudo service nginx restart || sudo /etc/init.d/nginx restart
+          fi
+
+        # Confirm restart
+          if sudo systemctl is-active nginx.service >/dev/null 2>&1 || sudo service nginx status >/dev/null 2>&1; then
+            echo "Nginx restarted successfully."
+            else
+            echo " Nginx restart failed."
+            exit 1
+          fi
+          # sudo systemctl restart nginx.service
         EOF
