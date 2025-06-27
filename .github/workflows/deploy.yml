@@ -87,12 +87,13 @@ jobs:
 
         sudo mkdir -p /usr/share/nginx/html
         sudo mv /tmp/index.html /usr/share/nginx/html/index.html
-
+        
+        export PATH=\$PATH:/usr/sbin
         echo "Testing Nginx config..."
-        sudo env "PATH=$PATH:/usr/sbin:/usr/bin" /usr/sbin/nginx -t
+        sudo env "PATH=\$PATH" nginx -t
 
         echo "Reloading Nginx gracefully..."
-        sudo env "PATH=$PATH:/usr/sbin:/usr/bin" /usr/sbin/nginx -s reload
+        sudo env "PATH=\$PATH" nginx -s reload
 
         echo " Nginx reload invoked successfully"
         EOF
