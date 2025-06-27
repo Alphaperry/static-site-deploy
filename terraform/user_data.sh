@@ -1,8 +1,10 @@
 #!/bin/bash
-yum update -y
-amazon-linux-extras install nginx1 -y
-systemctl start nginx
-systemctl enable nginx
+sudo yum update -y
+sudo amazon-linux-extras enable nginx1
+sudo yum clean metadata
+sudo yum install -y nginx
+sudo systemctl enable nginx
+sudo systemctl start nginx
 
 # Create a simple static site
 cat <<EOF > /usr/share/nginx/html/index.html

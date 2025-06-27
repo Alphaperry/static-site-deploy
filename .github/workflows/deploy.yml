@@ -74,7 +74,7 @@ jobs:
         chmod 600 private_key.pem
         scp -o StrictHostKeyChecking=no -i private_key.pem  ../site/index.html ec2-user@$EC2_PUBLIC_IP:/tmp/index.html
 
-    - name: Deploy and gracefully reload pre-installed Nginx
+    - name: Deploy content & reload updated Nginx
       env:
         EC2_PUBLIC_IP: ${{ env.EC2_PUBLIC_IP }}
       run: |
@@ -84,15 +84,6 @@ jobs:
         sudo mkdir -p /usr/share/nginx/html
         sudo mv /tmp/index.html /usr/share/nginx/html/index.html
 
-        echo "Testing configuration via absolute path..."
-        sudo /usr/sbin/nginx -t
-
-        echo "Reloading Nginx gracefully..."
-        sudo /usr/sbin/nginx -s reload
-
-        echo "✅ Nginx config validated and reloaded successfully!"
+        sudo systemctl restart nginx
+        sudo systemctl status nginx
         EOF
-
-
-
-
