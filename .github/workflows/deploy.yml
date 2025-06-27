@@ -85,5 +85,5 @@ jobs:
         ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_PUBLIC_IP << 'EOF'
           sudo mkdir -p /usr/share/nginx/html
           sudo mv /tmp/index.html /usr/share/nginx/html/index.html
-          sudo systemctl restart nginx
+          sudo systemctl restart nginx.service
         EOF
