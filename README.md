@@ -1,9 +1,12 @@
-<<<<<<< HEAD
+               HEAD
+
  Static Website Deployment via Terraform & GitHub Actions
 This project demonstrates how to provision an AWS EC2 instance using Terraform, configure it with Nginx, and deploy a static website using GitHub Actions for CI/CD.
 
- Overview
-Terraform provisions an Amazon Linux 2 EC2 instance with Nginx pre-installed
+             OVERVIEW
+
+Terraform provisions an Amazon Linux 2 EC2 instance with Nginx 
+ pre-installed
 
 Nginx serves a basic HTML file from the site/ folder
 
@@ -12,6 +15,7 @@ GitHub Actions deploys site updates automatically on each push to the main branc
 GitHub Secrets manage SSH and EC2 connection data securely
 
  Project Structure
+
 .
 ├── terraform/
 │   ├── main.tf               # Terraform configuration
@@ -23,18 +27,16 @@ GitHub Secrets manage SSH and EC2 connection data securely
 │       └── deploy.yml        # CI/CD GitHub Actions pipeline
 └── README.md
 
- Requirements
+    Requirements
 Before you begin, ensure you have:
 
-✅ An AWS account with access to create EC2 instances
+An AWS account with access to create EC2 instances
 
-✅ Terraform installed locally
+Terraform installed locally
 
-✅ A GitHub account and this repository created
+A GitHub account and this repository created
 
-✅ An EC2 key pair (public/private)
-
-✅ Your EC2 instance's public IP address
+An EC2 key pair (public/private)
 
  Setup Instructions
 1. Clone the Repo
@@ -48,12 +50,11 @@ bash
 cd terraform
 terraform init
 terraform apply
-✅ Note: Save the EC2 public IP address from the output or AWS Console.
 
 3. Add GitHub Secrets
 In your GitHub repo:
 
-➡️ Go to Settings → Secrets and variables → Actions → New repository secret
+Go to Settings → Secrets and variables → Actions → New repository secret
 
 Add:
 
@@ -64,13 +65,13 @@ EC2_SSH_KEY	Your private SSH key (contents only)
 4. Push a Site Update
 bash
 
-echo "<h1>Hello from the cloud! 🚀</h1>" > site/index.html
 git add .
 git commit -m "First website update"
 git push origin main
+
 This triggers the GitHub Actions pipeline which will deploy the updated site to EC2 via SSH.
 
-🌍 Access Your Website
+Access Your Website
 Visit the public IP in your browser:
 
 cpp
@@ -78,26 +79,24 @@ cpp
 http://<your-ec2-public-ip>
 You should see your static HTML page served by Nginx.
 
-🔐 Security Notes
-🔒 Never commit private keys to the repo
+Security Notes
+Never commit private keys to the repo
 
 Use GitHub Secrets for secure handling of SSH credentials
 
 Configure EC2 security group to only allow trusted IPs (e.g., port 22 & 80)
 
-👨‍💻 Maintainer
+   Maintainer
 Ndula Perry Bofuang
 Certified AWS Cloud & DevOps Engineer
 
 
-📄 License
+  License
 This project is licensed under the MIT License
 
 Built with  by a Cloud Engineer who automates everything.
 
-
-
-=======
 # static-site-deploy
-Static website deployed via Terraform and GitHub Actions
->>>>>>> 48685a11c3fea1fea47ef2bf39acd82e0be21ff5
+Static website deployed via Terraform and GitHub
+Actions
+
