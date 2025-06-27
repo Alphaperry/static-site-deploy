@@ -9,5 +9,5 @@ variable "my_ip" {
 
 variable "key_pair" {
   description = "the name of your ec2 key pair"
-  default     = ""
+  default     = "tier"
 }
