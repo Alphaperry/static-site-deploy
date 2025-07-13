@@ -2,14 +2,17 @@
 #               HEAD
 
 Static Website Deployment via Terraform & GitHub Actions
-This project demonstrates how to provision an AWS EC2 instance using Terraform, configure it with Nginx, and deploy a static website using GitHub Actions for CI/CD.
+This project demonstrates how to provision an AWS EC2 instance using
+Terraform, configure it with Nginx, and deploy a static website using
+GitHub Actions for CI/CD.
 
 #             OVERVIEW
 
 Terraform provisions an Amazon Linux 2 EC2 instance with Nginx 
 pre-installed
 Nginx serves a basic HTML file from the site/ folder
-GitHub Actions deploys site updates automatically on each push to the main branch
+GitHub Actions deploys site updates automatically on each push to the main
+branch
 GitHub Secrets manage SSH and EC2 connection data securely
 
 # Project Structure
@@ -50,8 +53,10 @@ In your GitHub repo:
 Go to Settings → Secrets and variables → Actions → New repository secret
 Add:
 Secret Name	Description
-EC2_PUBLIC_IP	The public IP of your EC2 instance
-EC2_SSH_KEY	Your private SSH key (contents only)
+S_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_REGION
+EC2_SSH_KEY
 
 4. Push a Site Update
 bash
